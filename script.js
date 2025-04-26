@@ -107,27 +107,29 @@ function checkCollisions() {
     return true;
   });
 
-  bullets = bullets.filter(bullet => {
-    let hit = false;
+  // 弾の処理
+bullets = bullets.filter(bullet => {
+  let hit = false;
 
-    // ボスに当たったら
-    if (boss && isColliding(bullet, boss)) {
-      bossHP -= 5;
+  // ボスに当たったら
+  if (boss && isColliding(bullet, boss)) {
+    bossHP -= 5;
+    hit = true;
+  }
+
+  // 敵に当たったら
+  for (let i = 0; i < enemies.length; i++) {
+    const enemy = enemies[i];
+    if (enemy.type === "blue" && isColliding(bullet, enemy)) {
+      enemies.splice(i, 1); // 松永を消す
       hit = true;
+      break; // 一発で一人だけ倒す
     }
+  }
 
-    // 松永に当たったら
-    enemies = enemies.filter(enemy => {
-      if (enemy.type === "blue" && isColliding(bullet, enemy)) {
-        hit = true;
-        return false; // 松永削除
-      }
-      return true;
-    });
+  return !hit && bullet.y > 0;
+});
 
-    return !hit && bullet.y > 0; // 当たった弾も削除
-  });
-}
 
 // メインループ
 function update() {
