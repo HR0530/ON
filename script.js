@@ -201,7 +201,7 @@ function update() {
       score += 10;
     }
 
-    drawText(bossImage === kchanImg ? "Kちゃん" : "Yちゃん", canvas.width / 2, 20, 24);
+    drawText(bossImage === kchanImg ? "Kちゃん" : "Yちゃん", canvas.width / 2, 35, 24);
   }
 
   checkCollisions();
